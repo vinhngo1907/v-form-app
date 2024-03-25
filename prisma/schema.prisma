@@ -19,7 +19,7 @@ model Form {
     name            String
     description     String            @default("")
     visits          Int               @default(0)
-    submission      Int               @default(0)
+    submissions      Int               @default(0)
     shareUrl        String            @unique @default(uuid())
     createdAt       DateTime          @default(now())
     updatedAt       DateTime          @updatedAt
