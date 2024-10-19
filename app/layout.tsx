@@ -10,7 +10,7 @@ import { ThemeProvider } from "@/components/providers/ThemeProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "PageForm (@CodeWithKliton)",
+    title: "PageForm (@CodeWithHenry)",
     description: "Check my youtube channel for more content",
 };
 
@@ -21,10 +21,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <body className={inter.className}>
                     <NextTopLoader />
                     <DesignerContextProvider>
-                    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-                        {children}
-                        {/* <Toaster /> */}
-                    </ThemeProvider>
+                        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+                            {children}
+                            {/* <Toaster /> */}
+                        </ThemeProvider>
                     </DesignerContextProvider>
                 </body>
             </html>
