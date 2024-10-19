@@ -25,9 +25,14 @@
 		"paths": {
 			"@/*": [
 				"./*"
+			],
+			"@lib/*": [
+				"./lib/*"
+			],
+			"@schemas/*": [
+				"./schemas/*"
 			]
-		},
-		"forceConsistentCasingInFileNames": true
+		}
 	},
 	"include": [
 		".eslintrc.json",
