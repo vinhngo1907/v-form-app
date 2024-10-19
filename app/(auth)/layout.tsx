@@ -1,3 +1,4 @@
+"use client";
 import React, { ReactNode } from "react";
 import Logo from "@/components/Logo";
 import ThemeSwitcher from "@/components/ThemeSwitcher";

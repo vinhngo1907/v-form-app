@@ -36,7 +36,7 @@ export type FormElementInstance = {
     extraAttributes?: Record<string, any>;
 };
 
-type FormElementsType = {
+export type FormElementsType = {
     [key in ElementsType]: FormElement;
 };
 export const FormELements: FormElementsType = {

@@ -2,7 +2,7 @@
 
 import { ElementsType, FormElement, FormElementInstance } from "../FormElements";
 import { Form, FormField } from "../ui/form";
-// import { LuHeading1 } from "react-icons/lu";
+import { LuHeading1 } from "react-icons/lu";
 
 // const type: ElementsType = "TitleField";
 
