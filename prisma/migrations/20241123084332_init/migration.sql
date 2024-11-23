@@ -5,6 +5,7 @@ CREATE TABLE "Form" (
     "published" BOOLEAN NOT NULL DEFAULT false,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL DEFAULT '',
+    "content" TEXT NOT NULL DEFAULT '[]',
     "visits" INTEGER NOT NULL DEFAULT 0,
     "submissions" INTEGER NOT NULL DEFAULT 0,
     "shareUrl" TEXT NOT NULL,
@@ -20,6 +21,7 @@ CREATE TABLE "FormSubmissions" (
     "formId" INTEGER NOT NULL,
     "created" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated" TIMESTAMP(3) NOT NULL,
+    "content" TEXT NOT NULL,
 
     CONSTRAINT "FormSubmissions_pkey" PRIMARY KEY ("id")
 );
