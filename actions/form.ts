@@ -14,7 +14,7 @@ export async function GetFormStats() {
 
     const stats = await prisma.form.aggregate({
         where: {
-            userId: parseInt(user.id, 10) // Parse user ID as a number
+            userId: user.id
         },
         _sum: {
             visits: true,
@@ -46,7 +46,7 @@ export async function GetFormById(id: number) {
 
     return await prisma.form.findFirstOrThrow({
         where: {
-            userId: Number(user.id),
+            userId: user.id,
             id,
         },
     });
@@ -79,7 +79,8 @@ export async function GetForms() {
 
     return await prisma.form.findMany({
         where: {
-            userId: parseInt(user.id, 10),
+            // userId: parseInt(user.id, 10),
+            userId: user.id
         },
         orderBy: {
             createdAt: "desc"

@@ -13,7 +13,7 @@ datasource db {
 
 model Form {
     id          Int     @id @default(autoincrement())
-    userId      Int
+    userId      String
     user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
     published   Boolean @default(false)
     name        String
@@ -27,7 +27,7 @@ model Form {
     updatedAt       DateTime          @updatedAt
     FormSubmissions FormSubmissions[]
 
-    @@unique([name, userId])
+    // @@unique([name, userId])
 }
 
 model FormSubmissions {
@@ -42,7 +42,7 @@ model FormSubmissions {
 }
 
 model User {
-    id            Int       @id @default(autoincrement())
+    id            String       @id @default(cuid())
     name          String?
     email         String?   @unique
     emailVerified DateTime?
