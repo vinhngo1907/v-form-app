@@ -38,3 +38,36 @@ export async function GetFormStats() {
         bounceRate
     }
 }
+
+export async function GetFormById(id: number) {
+    const user = await currentUser();
+    if (!user) {
+        throw new UserNotFoundErr();
+    }
+
+    return await prisma.form.findFirstOrThrow({
+        where: {
+            userId: Number(user.id),
+            id,
+        },
+    });
+}
+
+export async function submitForm(formUrl: string, content: string) {
+    return await prisma.form.update({
+        data: {
+          submissions: {
+            increment: 1,
+          },
+          FormSubmissions: {
+            create: {
+              content,
+            },
+          },
+        },
+        where: {
+          shareUrl: formUrl,
+          published: true,
+        },
+      });
+}

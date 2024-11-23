@@ -12,14 +12,16 @@ datasource db {
 }
 
 model Form {
-    id              Int               @id @default(autoincrement())
-    userId          Int
-    user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-    published       Boolean           @default(false)
-    name            String
-    description     String            @default("")
+    id          Int     @id @default(autoincrement())
+    userId      Int
+    user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    published   Boolean @default(false)
+    name        String
+    description String  @default("")
+    content     String  @default("[]")
+
     visits          Int               @default(0)
-    submissions      Int               @default(0)
+    submissions     Int               @default(0)
     shareUrl        String            @unique @default(uuid())
     createdAt       DateTime          @default(now())
     updatedAt       DateTime          @updatedAt
@@ -28,13 +30,13 @@ model Form {
     @@unique([name, userId])
 }
 
-// Necessary for Next auth
 model FormSubmissions {
     id      Int      @id @default(autoincrement())
     formId  Int
     form    Form     @relation(fields: [formId], references: [id], onDelete: Cascade)
     created DateTime @default(now())
     updated DateTime @updatedAt
+    content String
 
     @@unique([formId])
 }
