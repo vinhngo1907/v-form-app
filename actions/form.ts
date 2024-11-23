@@ -7,14 +7,14 @@ import { formSchema, formSchemaType } from "@schemas/form";
 class UserNotFoundErr extends Error { }
 
 export async function GetFormStats() {
-    const user = await currentUser()
+    const user = await currentUser();
     if (!user) {
         throw new UserNotFoundErr();
     }
 
     const stats = await prisma.form.aggregate({
         where: {
-            userId: Number(user.id)
+            userId: parseInt(user.id, 10) // Parse user ID as a number
         },
         _sum: {
             visits: true,
@@ -22,13 +22,12 @@ export async function GetFormStats() {
         }
     });
 
-    const submissions = stats._sum.submissions || 0;
-    const visits = stats._sum.visits || 0;
-    let submissionRate = 0;
-    if (visits > 0) {
-        submissionRate = (submissions / visits) * 100;
-    }
+    // Extract values or default to 0
+    const submissions = stats._sum?.submissions || 0;
+    const visits = stats._sum?.visits || 0;
 
+    // Calculate rates
+    const submissionRate = visits > 0 ? (submissions / visits) * 100 : 0;
     const bounceRate = 100 - submissionRate;
 
     return {
@@ -36,7 +35,7 @@ export async function GetFormStats() {
         visits,
         submissionRate,
         bounceRate
-    }
+    };
 }
 
 export async function GetFormById(id: number) {
@@ -56,18 +55,34 @@ export async function GetFormById(id: number) {
 export async function submitForm(formUrl: string, content: string) {
     return await prisma.form.update({
         data: {
-          submissions: {
-            increment: 1,
-          },
-          FormSubmissions: {
-            create: {
-              content,
+            submissions: {
+                increment: 1,
             },
-          },
+            FormSubmissions: {
+                create: {
+                    content,
+                },
+            },
         },
         where: {
-          shareUrl: formUrl,
-          published: true,
+            shareUrl: formUrl,
+            // published: true,
         },
-      });
+    });
+}
+
+export async function GetForms() {
+    const user = await currentUser();
+    if (!user) {
+        throw new UserNotFoundErr();
+    }
+
+    return await prisma.form.findMany({
+        where: {
+            userId: parseInt(user.id, 10),
+        },
+        orderBy: {
+            createdAt: "desc"
+        }
+    });
 }
