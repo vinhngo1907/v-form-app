@@ -1,9 +1,13 @@
 "use client";
+
+import React, { ReactNode, Suspense, useEffect, useState } from "react";
 import { GetFormStats, GetForms } from "@/actions/form";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+	Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle
+
+} from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@radix-ui/react-separator";
-import { ReactNode, Suspense } from "react";
 import { LuView } from "react-icons/lu";
 import { FaWpforms } from "react-icons/fa";
 import { HiCursorClick } from "react-icons/hi";
@@ -26,13 +30,18 @@ export default function Home() {
 			<Separator className="my-6" />
 			<h2 className="text-4xl font-bold col-span-2">Your forms</h2>
 			<Separator className="my-6" />
-			<div className="grid gric-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 				<CreateFormBtn />
-				<Suspense
-					fallback={[1, 2, 3, 4].map((el) => (
-						<FormCardSkeleton key={el} />
-					))}
-				>
+				{/* <Suspense
+					fallback={
+						[1, 2, 3, 4].map((el) => (
+							<FormCardSkeleton key={el} />
+						))
+					}
+
+				> */}
+				<Suspense fallback={Array.from({ length: 4 }).map((_, i) => <FormCardSkeleton key={i} />)}>
+					{/* <FormCards /> */}
 					<FormCards />
 				</Suspense>
 			</div>
@@ -42,7 +51,7 @@ export default function Home() {
 
 async function CardStatsWrapper() {
 	const stats = await GetFormStats();
-	return <StatsCards loading={false} data={stats} />;
+	return (<StatsCards loading={false} data={stats} />);
 }
 
 interface StatsCardProps {
@@ -134,11 +143,46 @@ function FormCardSkeleton() {
 	return <Skeleton className="border-2 border-primary-/20 h-[190px] w-full" />;
 }
 
+// async function FormCards() {
+// 	const forms = await GetForms();
+// 	console.log(">?>?>?>?>?", { forms });
+// 	return (
+// 		<>
+// 			{forms.map((form) => (
+// 				<FormCard key={form.id} form={form} />
+// 			))}
+// 		</>
+// 	);
+// }
+
 async function FormCards() {
-	const forms = await GetForms();
+	const [forms, setForms] = useState<Form[] | null>(null);
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		async function fetchForms() {
+			const fetchedForms = await GetForms();
+			setForms(fetchedForms);
+			setLoading(false);
+		}
+
+		fetchForms();
+	}, []);
+
+	if (loading) {
+		return (
+			<>
+				{console.log("Fallback is rendering")}
+				{[1, 2, 3, 4].map((el) => (
+					<FormCardSkeleton key={el} />
+				))}
+			</>
+		);
+	}
+
 	return (
 		<>
-			{forms.map((form) => (
+			{!loading && forms?.map((form) => (
 				<FormCard key={form.id} form={form} />
 			))}
 		</>
@@ -188,5 +232,5 @@ function FormCard({ form }: { form: Form }) {
 				)}
 			</CardFooter>
 		</Card>
-	)
+	);
 }
