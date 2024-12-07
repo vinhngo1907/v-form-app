@@ -9,7 +9,7 @@ import { FaWpforms } from "react-icons/fa";
 import { HiCursorClick } from "react-icons/hi";
 import { TbArrowBounce } from "react-icons/tb";
 import { Form } from "@prisma/client";
-// import CreateFormBtn from "@/components/CreateFormBtn";
+import CreateFormBtn from "@/components/CreateFormBtn";
 
 export default function Home() {
 	return (
@@ -21,7 +21,7 @@ export default function Home() {
 			<h2 className="text-4xl font-bold col-span-2">Your forms</h2>
 			<Separator className="my-6" />
 			<div className="grid gric-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-				{/* <CreateFormBtn /> */}
+				<CreateFormBtn />
 				<Suspense
 					fallback={[1, 2, 3, 4].map((el) => (
 						<FormCardSkeleton key={el} />

@@ -66,7 +66,7 @@ export async function submitForm(formUrl: string, content: string) {
         },
         where: {
             shareUrl: formUrl,
-            // published: true,
+            published: true,
         },
     });
 }
@@ -103,4 +103,32 @@ export async function UpdateFormContent(id: number, jsonContent: string) {
             content: jsonContent,
         },
     });
+}
+
+export async function CreateForm(data: formSchemaType) {
+    const validation = formSchema.safeParse(data);
+    if (!validation) {
+        throw new Error("form not valid");
+    }
+
+    const user = await currentUser();
+    if (!user) {
+        throw new UserNotFoundErr();
+    }
+    
+    const { name, description } = data;
+    
+    const form = await prisma.form.create({
+        data: {
+            userId: user?.id,
+            name,
+            description
+        }
+    });
+
+    if (!form) {
+        throw new Error("something went wrong");
+    }
+
+    return form.id;
 }
