@@ -115,9 +115,9 @@ export async function CreateForm(data: formSchemaType) {
     if (!user) {
         throw new UserNotFoundErr();
     }
-    
+
     const { name, description } = data;
-    
+
     const form = await prisma.form.create({
         data: {
             userId: user?.id,
@@ -131,4 +131,12 @@ export async function CreateForm(data: formSchemaType) {
     }
 
     return form.id;
+}
+
+export async function GetFormContentByUrl(url: string) {
+    return await prisma.form.findFirst({
+        where: {
+            shareUrl: url
+        }
+    });
 }
