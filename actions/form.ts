@@ -134,9 +134,34 @@ export async function CreateForm(data: formSchemaType) {
 }
 
 export async function GetFormContentByUrl(url: string) {
-    return await prisma.form.findFirst({
+    return await prisma.form.update({
+        select: {
+            content: true
+        },
+        data: {
+            visits: {
+                increment: 1
+            }
+        },
         where: {
             shareUrl: url
         }
+    });
+}
+
+export async function PublishForm(id: number) {
+    const user = await currentUser();
+    if (!user) {
+        throw new UserNotFoundErr();
+    }
+
+    return await prisma.form.update({
+        data: {
+            published: true,
+        },
+        where: {
+            userId: user.id,
+            id,
+        },
     });
 }
