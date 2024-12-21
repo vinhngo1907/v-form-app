@@ -102,7 +102,7 @@ type Row = { [key: string]: string } & {
 
 async function SubmissionsTable({ id }: { id: number }) {
     const form = await GetFormWithSubmissions(id);
-console.log("asdasdas",{form})
+
     if (!form) {
         throw new Error("form not found");
     }
@@ -118,10 +118,10 @@ console.log("asdasdas",{form})
     formElements.forEach((element) => {
         switch (element.type) {
             case "TextField":
-            // case "NumberField":
+            case "NumberField":
             case "TextAreaField":
             case "DateField":
-            // case "SelectField":
+            case "SelectField":
             case "CheckboxField":
                 columns.push({
                     id: element.id,
@@ -140,7 +140,7 @@ console.log("asdasdas",{form})
         const content = JSON.parse(submission.content);
         rows.push({
             ...content,
-            // submittedAt: submission.createdAt,
+            submittedAt: submission.created,
         });
     });
 
