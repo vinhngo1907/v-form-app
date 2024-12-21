@@ -1,8 +1,6 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-import { Button } from "./ui/button";
+import React from "react";
 import { FormElement } from "./FormElements";
+import { Button } from "./ui/button";
 import { useDraggable } from "@dnd-kit/core";
 import { cn } from "@/lib/utils";
 
@@ -13,7 +11,7 @@ function SidebarBtnElement({ formElement }: { formElement: FormElement }) {
         data: {
             type: formElement.type,
             isDesignerBtnElement: true,
-        }
+        },
     });
 
     return (
@@ -30,8 +28,9 @@ function SidebarBtnElement({ formElement }: { formElement: FormElement }) {
             <Icon className="h-8 w-8 text-primary cursor-grab" />
             <p className="text-xs">{label}</p>
         </Button>
-    )
+    );
 }
+
 export function SidebarBtnElementDragOverlay({ formElement }: { formElement: FormElement }) {
     const { label, icon: Icon } = formElement.designerBtnElement;
 

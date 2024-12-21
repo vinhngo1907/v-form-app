@@ -52,7 +52,7 @@ export async function GetFormById(id: number) {
     });
 }
 
-export async function submitForm(formUrl: string, content: string) {
+export async function SubmitForm(formUrl: string, content: string) {
     return await prisma.form.update({
         data: {
             submissions: {
@@ -79,7 +79,6 @@ export async function GetForms() {
 
     return await prisma.form.findMany({
         where: {
-            // userId: parseInt(user.id, 10),
             userId: user.id
         },
         orderBy: {
@@ -163,5 +162,22 @@ export async function PublishForm(id: number) {
             userId: user.id,
             id,
         },
+    });
+}
+
+export async function GetFormWithSubmissions(id: number){
+    const user = await currentUser();
+    if(!user){
+        throw new UserNotFoundErr();
+    }
+
+    return await prisma.form.findUnique({
+        where:{
+            userId: user?.id,
+            id
+        },
+        include:{
+            FormSubmissions: true
+        }
     });
 }

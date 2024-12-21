@@ -3,13 +3,13 @@ import useDesigner from "./hooks/useDesigner";
 import { AiOutlineClose } from "react-icons/ai";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
-import { FormELements } from "./FormElements";
+import { FormElements } from "./FormElements";
 
 function PropertiesFormSidebar() {
     const { selectedElement, setSelectedElement } = useDesigner();
     if (!selectedElement) return null;
 
-    const PropertiesForm = FormELements[selectedElement?.type].propertiesComponent;
+    const PropertiesForm = FormElements[selectedElement?.type].propertiesComponent;
 
     return (
         <div className="flex flex-col p-2">

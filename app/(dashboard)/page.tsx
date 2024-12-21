@@ -1,21 +1,20 @@
-"use client";
 import { GetFormStats, GetForms } from "@/actions/form";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Separator } from "@radix-ui/react-separator";
 import { ReactNode, Suspense } from "react";
 import { LuView } from "react-icons/lu";
 import { FaWpforms } from "react-icons/fa";
 import { HiCursorClick } from "react-icons/hi";
 import { TbArrowBounce } from "react-icons/tb";
-import { Form } from "@prisma/client";
+import { Separator } from "@/components/ui/separator";
 import CreateFormBtn from "@/components/CreateFormBtn";
+import { Form } from "@prisma/client";
+import { Badge } from "@/components/ui/badge";
+import { formatDistance } from "date-fns";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { BiRightArrowAlt } from "react-icons/bi";
 import { FaEdit } from "react-icons/fa";
-import { Badge } from "@/components/ui/badge";
-import { formatDistance } from "date-fns";
 
 export default function Home() {
 	return (
@@ -188,5 +187,5 @@ function FormCard({ form }: { form: Form }) {
 				)}
 			</CardFooter>
 		</Card>
-	)
+	);
 }
