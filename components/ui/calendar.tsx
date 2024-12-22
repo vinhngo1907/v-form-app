@@ -9,7 +9,14 @@ import { buttonVariants } from "@/components/ui/button";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
-function Calendar({ className, classNames, showOutsideDays = true, ...props }: CalendarProps) {
+function Calendar({initialFocus, className, classNames, showOutsideDays = true, ...props }: CalendarProps & { initialFocus?: boolean }) {
+    React.useEffect(() => {
+        if (initialFocus) {
+            const focusableElement = document.querySelector('.day-today') as HTMLElement;
+            focusableElement?.focus();
+        }
+    }, [initialFocus]);
+
     return (
         <DayPicker
             showOutsideDays={showOutsideDays}

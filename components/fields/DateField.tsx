@@ -124,7 +124,7 @@ function FormComponent({
 					</Button>
 				</PopoverTrigger>
 				<PopoverContent className="w-auto p-0" align="start">
-					{/* <Calendar
+					<Calendar
 						mode="single"
 						selected={date}
 						onSelect={(date) => {
@@ -138,7 +138,7 @@ function FormComponent({
 							submitValue(element.id, value);
 						}}
 						initialFocus
-					/> */}
+					/>
 				</PopoverContent>
 			</Popover>
 			{helperText && <p className={cn("text-muted-foreground text-[0.8rem]", error && "text-red-500")}>{helperText}</p>}
