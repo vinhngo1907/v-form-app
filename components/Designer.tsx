@@ -60,7 +60,7 @@ function Designer() {
 					throw new Error("element not found");
 				}
 
-				let indexForNewElement = overElementIndex; // i assume i'm on top-half
+				let indexForNewElement = overElementIndex;
 				if (isDroppingOverDesignerElementBottomHalf) {
 					indexForNewElement = overElementIndex + 1;
 				}
@@ -69,7 +69,6 @@ function Designer() {
 				return;
 			}
 
-			// Third scenario
 			const isDraggingDesignerElement = active.data?.current?.isDesignerElement;
 
 			const draggingDesignerElementOverAnotherDesignerElement =
@@ -90,7 +89,7 @@ function Designer() {
 				const activeElement = { ...elements[activeElementIndex] };
 				removeElement(activeId);
 
-				let indexForNewElement = overElementIndex; // i assume i'm on top-half
+				let indexForNewElement = overElementIndex;
 				if (isDroppingOverDesignerElementBottomHalf) {
 					indexForNewElement = overElementIndex + 1;
 				}
@@ -198,7 +197,7 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
 							className="flex justify-center h-full border rounded-md rounded-l-none bg-red-500"
 							variant={"outline"}
 							onClick={(e) => {
-								e.stopPropagation(); // avoid selection of element while deleting
+								e.stopPropagation();
 								removeElement(element.id);
 							}}
 						>
